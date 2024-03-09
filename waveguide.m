@@ -59,12 +59,12 @@ CSX = AddBox(CSX, 'vacuum', 1, start, stop);
 
 start = [mesh.x(1) 0 -a/2];
 stop  = [mesh.x(end) b a/2];
-% CSX = AddBox(CSX, 'vacuum', 1, start, stop);
+CSX = AddBox(CSX, 'vacuum', 1, start, stop);
 
 
 start = [0 mesh.y(1) -b/2];
 stop  = [a mesh.y(end) b/2];
-% CSX = AddBox(CSX, 'vacuum', 1, start, stop);
+CSX = AddBox(CSX, 'vacuum', 1, start, stop);
 
 
 %% apply the waveguide port %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
