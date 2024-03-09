@@ -130,6 +130,8 @@ port = calcPort(port, Sim_Path, freq);
 %
 s11 = port{1}.uf.ref./ port{1}.uf.inc;
 s21 = port{2}.uf.ref./ port{1}.uf.inc;
+s31 = port{3}.uf.ref./ port{1}.uf.inc;
+s41 = port{4}.uf.ref./ port{1}.uf.inc;
 ZL = port{1}.uf.tot./port{1}.if.tot;
 ZL_a = port{1}.ZL; % analytic waveguide impedance
 
@@ -143,7 +145,9 @@ xlim([freq(1) freq(end)]*1e-6);
 grid on;
 hold on;
 plot(freq*1e-6,20*log10(abs(s21)),'r--','Linewidth',4);
-l = legend('S_{11}','S_{21}','Location','northeast');
+plot(freq*1e-6,20*log10(abs(s31)),'g--','Linewidth',4);
+plot(freq*1e-6,20*log10(abs(s41)),'b--','Linewidth',4);
+l = legend('S_{11}','S_{21}','S_{31}','S_{41}','Location','northeast');
 set(l,'FontSize',8);
 ylabel('S-Parameter (dB)','FontSize',8);
 xlabel('frequency (MHz) \rightarrow','FontSize',8);
@@ -157,7 +161,9 @@ xlim([freq(1) freq(end)]*1e-6);
 grid on;
 hold on;
 plot(freq*1e-6,abs(s21),'r--','Linewidth',4);
-l = legend('S_{11}','S_{21}','Location','northeast');
+plot(freq*1e-6,abs(s31),'g--','Linewidth',4);
+plot(freq*1e-6,abs(s41),'b--','Linewidth',4);
+l = legend('S_{11}','S_{21}','S_{31}','S_{41}','Location','northeast');
 set(l,'FontSize',8);
 ylabel('S-Parameter','FontSize',8);
 xlabel('frequency (MHz) \rightarrow','FontSize',8);
