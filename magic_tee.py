@@ -33,9 +33,7 @@ lambda0 = C0/f_0/unit
 TE_mode = 'TE10'
 
 # targeted mesh resolution
-# mesh_res = lambda0/30
-# mesh_res = 0.5
-mesh_res = 1
+mesh_res = lambda0/30
 print(f"{mesh_res=}")
 
 # Setup FDTD parameter & excitation function
@@ -53,13 +51,9 @@ mesh = CSX.GetGrid()
 mesh.SetDeltaUnit(unit)
 
 x_start = 0
-# x_end = a
-# x_end = a + 1
 x_end = a + length
 
 y_start = 0
-# y_end = b
-# y_end = b + 1
 y_end = b + length
 
 z_start = 0 - length
@@ -84,18 +78,17 @@ stop  = [a, b, z_end - 20 - 5 * mesh_res]
 mesh.AddLine('z', [start[2], stop[2]])
 ports.append(FDTD.AddRectWaveGuidePort(1, start, stop, 'z', a*unit, b*unit, "TE10"))
 
-if length > 25:
-    # Port 3 (E-Arm)
-    start = [0, y_end - 20 - 5 * mesh_res, -b/2]
-    stop  = [a, y_end - 20,                 b/2]
-    mesh.AddLine('y', [start[1], stop[1]])
-    ports.append(FDTD.AddRectWaveGuidePort(2, start, stop, 'y', a*unit, b*unit, "TE10"))
+# Port 3 (E-Arm)
+start = [0, y_end - 20 - 5 * mesh_res, -b/2]
+stop  = [a, y_end - 20,                 b/2]
+mesh.AddLine('y', [start[1], stop[1]])
+ports.append(FDTD.AddRectWaveGuidePort(2, start, stop, 'y', a*unit, b*unit, "TE10"))
 
-    # Port 2 (H-Arm)
-    start = [x_end - 20,                0, -a/2]
-    stop  = [x_end - 20 - 5 * mesh_res, b,  a/2]
-    mesh.AddLine('x', [start[0], stop[0]])
-    ports.append(FDTD.AddRectWaveGuidePort(3, start, stop, 'x', a*unit, b*unit, "TE10"))
+# Port 2 (H-Arm)
+start = [x_end - 20,                0, -a/2]
+stop  = [x_end - 20 - 5 * mesh_res, b,  a/2]
+mesh.AddLine('x', [start[0], stop[0]])
+ports.append(FDTD.AddRectWaveGuidePort(3, start, stop, 'x', a*unit, b*unit, "TE10"))
 
 mesh.SmoothMeshLines('all', mesh_res, ratio=1.4)
 
@@ -147,20 +140,14 @@ for port in ports:
 
 s11 = ports[0].uf_ref / ports[0].uf_inc
 s21 = ports[1].uf_ref / ports[0].uf_inc
-try:
-    s31 = ports[2].uf_ref / ports[0].uf_inc
-    s41 = ports[3].uf_ref / ports[0].uf_inc
-    summ = abs(s11)**2 + abs(s21)**2 + abs(s31)**2 + abs(s41)**2
-except NameError:
-    summ = abs(s11) ** 2 + abs(s21) ** 2
+s31 = ports[2].uf_ref / ports[0].uf_inc
+s41 = ports[3].uf_ref / ports[0].uf_inc
+summ = abs(s11)**2 + abs(s21)**2 + abs(s31)**2 + abs(s41)**2
 
 print(f"{abs(s11)=}")
 print(f"{abs(s21)=}")
-try:
-    print(f"{abs(s31)=}")
-    print(f"{abs(s41)=}")
-except NameError:
-    pass
+print(f"{abs(s31)=}")
+print(f"{abs(s41)=}")
 print(f"{summ=}")
 
 # Plot s-parameter
@@ -170,11 +157,8 @@ plt.subplot(1, 2, 1)
 plt.plot(freq*1e-6, 20*log10(abs(s11)), 'r--', marker="1", markevery=50, linewidth=2, label='$S_{11}$')
 plt.grid()
 plt.plot(freq*1e-6, 20*log10(abs(s21)), 'g--', marker="2", linewidth=2, markevery=55, label='$S_{21}$')
-try:
-    plt.plot(freq*1e-6, 20*log10(abs(s31)), 'b--', marker="2", linewidth=2, markevery=55, label='$S_{31}$')
-    plt.plot(freq*1e-6, 20*log10(abs(s41)), 'y--', marker="2", linewidth=2, markevery=55, label='$S_{41}$')
-except NameError:
-    pass
+plt.plot(freq*1e-6, 20*log10(abs(s31)), 'b--', marker="2", linewidth=2, markevery=55, label='$S_{31}$')
+plt.plot(freq*1e-6, 20*log10(abs(s41)), 'y--', marker="2", linewidth=2, markevery=55, label='$S_{41}$')
 plt.legend()
 plt.ylabel('S-Parameter (dB)')
 plt.xlabel(r'frequency (MHz) $\rightarrow$')
@@ -183,11 +167,8 @@ plt.subplot(1, 2, 2)
 plt.plot(freq*1e-6, abs(s11**2), 'r--', linewidth=2, label='$S_{11}^{2}$')
 plt.grid()
 plt.plot(freq*1e-6, abs(s21**2), 'g--', linewidth=2, label='$S_{21}^{2}$')
-try:
-    plt.plot(freq*1e-6, abs(s31**2), 'b--', linewidth=2, label='$S_{31}^{2}$')
-    plt.plot(freq*1e-6, abs(s41**2), 'y--', linewidth=2, label='$S_{41}^{2}$')
-except NameError:
-    pass
+plt.plot(freq*1e-6, abs(s31**2), 'b--', linewidth=2, label='$S_{31}^{2}$')
+plt.plot(freq*1e-6, abs(s41**2), 'y--', linewidth=2, label='$S_{41}^{2}$')
 plt.plot(freq*1e-6, summ, 'k-', linewidth=1, label='$Summ$')
 plt.legend()
 plt.ylabel('S-Parameter')
