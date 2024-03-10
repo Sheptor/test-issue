@@ -84,7 +84,7 @@ stop  = [a, y_end - 20 - 5 * mesh_res,  b/2]
 mesh.AddLine('y', [start[1], stop[1]])
 ports.append(FDTD.AddRectWaveGuidePort(2, start, stop, 'y', a*unit, b*unit, "TE10"))
 
-# Port 2 (H-Arm)
+# Port 4 (H-Arm)
 start = [x_end - 20,                0, -a/2]
 stop  = [x_end - 20 - 5 * mesh_res, b,  a/2]
 mesh.AddLine('x', [start[0], stop[0]])
