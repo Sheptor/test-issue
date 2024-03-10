@@ -11,7 +11,7 @@ from openEMS.physical_constants import *
 # Set up the simulation
 # Sim_Path = os.path.join(tempfile.gettempdir(), 'Rect_WR90')
 CURRENT_PATH = os.path.dirname(os.path.abspath(__file__))
-APP_CSXCAD_PATH = '/home/semicond/opt/openEMS/bin/'
+APP_CSXCAD_PATH = '~/opt/openEMS/bin/'
 Sim_Path = os.path.join(CURRENT_PATH, 'Rect_WR90')
 
 post_proc_only = False
@@ -79,8 +79,8 @@ mesh.AddLine('z', [start[2], stop[2]])
 ports.append(FDTD.AddRectWaveGuidePort(1, start, stop, 'z', a*unit, b*unit, "TE10"))
 
 # Port 3 (E-Arm)
-start = [0, y_end - 20 - 5 * mesh_res, -b/2]
-stop  = [a, y_end - 20,                 b/2]
+start = [0, y_end - 20,                -b/2]
+stop  = [a, y_end - 20 - 5 * mesh_res,  b/2]
 mesh.AddLine('y', [start[1], stop[1]])
 ports.append(FDTD.AddRectWaveGuidePort(2, start, stop, 'y', a*unit, b*unit, "TE10"))
 
