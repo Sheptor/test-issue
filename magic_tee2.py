@@ -80,14 +80,14 @@ mesh.AddLine('z', [start[2], stop[2]])
 ports.append(FDTD.AddRectWaveGuidePort(1, start, stop, 'z', a*unit, b*unit, "TE10"))
 
 ### E-Arm
-start = [0-1, y_end-20*mesh_res, -b/2-1]
-stop  = [a+1, y_end-25*mesh_res,  b/2+1]
+start = [0, y_end-20*mesh_res, -b/2]
+stop  = [a, y_end-25*mesh_res,  b/2]
 mesh.AddLine('y', [start[1], stop[1]])
 ports.append(FDTD.AddRectWaveGuidePort(2, start, stop, 'y', a*unit, b*unit, "TE10"))
 
 ### H-Arm
-start = [x_end-20*mesh_res, 0-1, -a/2-1]
-stop  = [x_end-25*mesh_res, b+1,  a/2+1]
+start = [x_end-20*mesh_res, 0, -a/2]
+stop  = [x_end-25*mesh_res, b,  a/2]
 mesh.AddLine('x', [start[0], stop[0]])
 ports.append(FDTD.AddRectWaveGuidePort(3, start, stop, 'x', a*unit, b*unit, "TE10"))
 
