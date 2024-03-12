@@ -81,8 +81,6 @@ stop  = [a, b, z_end - 20 - 5*mesh_res]
 mesh.AddLine('z', [start[2], stop[2]])
 ports.append(FDTD.AddRectWaveGuidePort(1, start, stop, 'z', a*unit, b*unit, "TE10"))
 
-mesh.SmoothMeshLines('all', mesh_res, ratio=1.4)
-
 ### ADD PRIMITIVES ################################################################################
 ### Add waveguide walls
 metal = CSX.AddMetal('metal') # create a metal property with name "metal"
